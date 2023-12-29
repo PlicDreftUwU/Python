@@ -1,8 +1,9 @@
 import pyabf
 import matplotlib.pyplot as plt
 import numpy as np
+
 # Ruta al archivo ABF
-ruta_archivo_abf = '22807000.abf'
+ruta_archivo_abf = 'ABF/22807000.abf'
 
 # Cargar el archivo ABF
 abf = pyabf.ABF(ruta_archivo_abf)
@@ -14,31 +15,24 @@ print(f"Duracion del experimento: {abf.sweepLengthSec} segundos")
 print(f"Frecuencia de muestreo: {abf.dataRate} Hz")
 print(f"Numero de sweeps: {abf.sweepCount}")
 
-#------------------------------
+if abf.sweepCount > 0:
+    # Obtener todos los datos de los canales
+    todos_los_datos = abf.sweepY
 
-# Extraer la duración del experimento (en segundos)
-experiment_duration = abf.dataRate * abf.pointsPerScan * abf.sweepCount
+    # Cambiar la forma de la matriz a una matriz bidimensional
+    todos_los_datos = todos_los_datos.reshape((int(abf.sweepCount), int(abf.sweepLengthSec*abf.dataRate)))
 
-# Extraer la información de los canales
-channels = [
-    {"name": "Channel 1", "color": "blue", "data": abf.data[:, 0]},
-    {"name": "Channel 2", "color": "green", "data": abf.data[:, 1]},
-    {"name": "Channel 3", "color": "red", "data": abf.data[:, 2]},
-]
+    # Obtener tiempo
+    tiempo = abf.sweepX
 
-# Graficar los canales
-plt.figure(figsize=(10, 6))
-
-for channel in channels:
-    plt.plot(
-        np.arange(abf.pointsPerScan) / abf.dataRate,
-        channel["data"],
-        color=channel["color"],
-        label=channel["name"],
-    )
-
-plt.title(f"{abf.protocol} (Sweep Count: {abf.sweepCount})")
-plt.xlabel("Time (s)")
-plt.ylabel("Membrane Potential (mV)")
-plt.legend()
-plt.show()
+    # Hacer algo con los datos, por ejemplo, trazarlos usando Matplotlib
+    plt.figure(figsize=(10, 6))
+    for i in range(abf.channelCount):
+        plt.plot(tiempo, todos_los_datos[:,i], label=f'Canal {i+1}')
+    plt.title("Datos de todos los canales durante el experimento")
+    plt.xlabel("Tiempo (s)")
+    plt.ylabel("Datos de la señal")
+    plt.legend()
+    plt.show()
+else:
+    print("No hay sweeps en el archivo ABF.")
