@@ -19,10 +19,9 @@ if abf.sweepCount > 0:
     # Obtener todos los datos de los canales
     todos_los_datos = abf.sweepY
     dimensiones = todos_los_datos.shape
-    print('Dimensiones tiempo: ',dimensiones)
+    print('Dimensiones Datos: ',dimensiones)
     # Obtener tiempo
     tiempo = np.transpose(abf.sweepX)
-    print(type(tiempo))
     np.transpose(tiempo)
     dimensiones_tiempo = tiempo.shape
     print('Dimensiones tiempo: ',dimensiones_tiempo)
