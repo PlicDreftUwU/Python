@@ -1,0 +1,6 @@
+archivo = open("archivo1.txt","a")
+dedicacion = input("Dedicacion: ")
+archivo.write("\n")
+archivo.write(dedicacion)
+print("Termine")
+archivo.close()
