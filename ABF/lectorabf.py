@@ -18,17 +18,18 @@ print(f"Numero de sweeps: {abf.sweepCount}")
 if abf.sweepCount > 0:
     # Obtener todos los datos de los canales
     todos_los_datos = abf.sweepY
-
-    # Cambiar la forma de la matriz a una matriz bidimensional
-    todos_los_datos = todos_los_datos.reshape((int(abf.sweepCount), int(abf.sweepLengthSec*abf.dataRate)))
-
+    dimensiones = todos_los_datos.shape
+    print('Dimensiones tiempo: ',dimensiones)
     # Obtener tiempo
-    tiempo = abf.sweepX
-
+    tiempo = np.transpose(abf.sweepX)
+    print(type(tiempo))
+    np.transpose(tiempo)
+    dimensiones_tiempo = tiempo.shape
+    print('Dimensiones tiempo: ',dimensiones_tiempo)
     # Hacer algo con los datos, por ejemplo, trazarlos usando Matplotlib
     plt.figure(figsize=(10, 6))
     for i in range(abf.channelCount):
-        plt.plot(tiempo, todos_los_datos[:,i], label=f'Canal {i+1}')
+        plt.plot(tiempo, todos_los_datos, label=f'Canal {i+1}')
     plt.title("Datos de todos los canales durante el experimento")
     plt.xlabel("Tiempo (s)")
     plt.ylabel("Datos de la señal")
