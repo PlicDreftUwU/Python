@@ -1,6 +1,7 @@
 from io import open
 #Usar path absoluto
 import pathlib as path
+import shutil
 #Abrir archivo
 # archivo = open("fichero.txt","a+")
 #Abrir desde el directorio absoluto
@@ -35,3 +36,8 @@ for frase in lista:
 for frase in lista:
     lista_frase = frase.split()
     print(lista_frase)
+
+#------------------- Copiando archivos ------------- #
+ruta_original = str(path.Path().absolute()) + "/Manipulacion de archivos/fichero.txt"
+ruta_nueva = str(path.Path().absolute()) + "/Manipulacion de archivos/copia_fichero.txt"
+shutil.copyfile(ruta_original,ruta_nueva)
