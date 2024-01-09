@@ -24,13 +24,15 @@ if abf.sweepCount > 0:
     tiempo = np.transpose(abf.sweepX)
     np.transpose(tiempo)
     print('Dimensiones tiempo: ',tiempo.shape)
-    # Definimos una matriz para poder manipular los datos
+    # Definimos una matriz para poder ingresarla a un DataFrame
     abf.setSweep(sweepNumber=0,channel=2)
     dataMatrix = np.array([abf.sweepY])
     dataMatrix = np.transpose(dataMatrix)
     # DataFrame con pandas
     df = pd.DataFrame(dataMatrix, columns = ['Datos'])
+    # Eliminamos los datos de los primeros 4 segundos
     df = df.drop(df.index[:4000])
+    # Encontramos el valor mas pequeño del DataFrame
     print(f'Min Value: {df.min().min()}')
     # Graficamos cada canal para obtener la informacion
     fig, axs = plt.subplots(abf.channelCount,1,figsize=(10,6))
