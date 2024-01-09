@@ -15,7 +15,7 @@ print(f"Duracion del experimento: {abf.sweepLengthSec} segundos")
 print(f"Frecuencia de muestreo: {abf.dataRate} Hz")
 print(f'Numero de canales: {abf.channelCount}')
 print(f"Numero de sweeps: {abf.sweepCount}")
-
+#Comprobamos que haya más de un dato para poder trabajar
 if abf.sweepCount > 0:
     # Obtenemos dimensiones de los datos
     dimensiones = abf.sweepY
@@ -34,7 +34,7 @@ if abf.sweepCount > 0:
     df = df.drop(df.index[:4000])
     # Encontramos el valor mas pequeño del DataFrame
     print(f'Min Value: {df.min().min()}')
-    # Graficamos cada canal para obtener la informacion
+    # Graficamos cada canal para obtener la informacion en graficas independientes
     fig, axs = plt.subplots(abf.channelCount,1,figsize=(10,6))
     for i in range(abf.channelCount):
         abf.setSweep(sweepNumber=0,channel=i)
